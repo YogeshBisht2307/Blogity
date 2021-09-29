@@ -1,0 +1,5 @@
+#used for testing venv folder will not be tested
+coverage run --omit='*/venv/*' manage.py test
+
+#for creating a folder named as htmlcov
+coverage html
