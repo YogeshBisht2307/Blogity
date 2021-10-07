@@ -11,6 +11,10 @@ class Category(models.Model):
     def __str__(self):
         return str(self.name)
 
+    # Overriding the save method of Category model class for storing category slug with the help of slugify method. 
+    #  Category name will be slugify into the slug 
+    # Example :- web development => web-development
+
     def save(self, *args, **kwargs):
         if not self.id:
             # Newly created object, so set slug
@@ -18,6 +22,7 @@ class Category(models.Model):
 
         super(Category, self).save(*args, **kwargs)
 
+    #meta class for storing the additional data of category model such as database table name and django admin model name.
     class Meta:
         db_table = "blog_categories"
         verbose_name_plural = "Categories"
@@ -31,6 +36,9 @@ class SubCategory(models.Model):
     def __str__(self):
         return str(self.name)
 
+    # Overriding the save method of SubCategory model class for storing category slug with the help of slugify method. 
+    # SubCategory name will be slugify into the slug 
+    # Example :- django development => django-development
     def save(self, *args, **kwargs):
         if not self.id:
             # Newly created object, so set slug
@@ -39,6 +47,7 @@ class SubCategory(models.Model):
         super(SubCategory, self).save(*args, **kwargs)
     
 
+    # meta class for storing the additional data of SubCategory model such as database table name and django admin model name.
     class Meta:
         db_table = "blog_subCategories"
         verbose_name_plural = "SubCategories"
@@ -48,10 +57,12 @@ class SubCategory(models.Model):
 
 class Article(models.Model):
 
+    # manager class for overriding the (models.objects.get() ) objects part of query so that it overrided ArticleObject will fetch only published article
     class ArticleObject(models.Manager):
         def get_queryset(self):
             return super().get_queryset() .filter(status = 'published')
 
+    # choices options for status column of the article model it will be displayed as dropdown to choose the status of a article.
     options = (
         ('draft', 'Draft'),
         ('published', "Published"),
@@ -69,12 +80,19 @@ class Article(models.Model):
     sub_category = models.ForeignKey(SubCategory, on_delete  = models.PROTECT)
     status = models.CharField(max_length = 10, choices = options, default = 'published')
 
-    objects = models.Manager() #default manage
+    objects = models.Manager() #default manageer
+
+    # 1. Now we can access query for published item as follow using artcileobjects
+    # 2. Example => models.artcileobjects.all()
     artcileobjects = ArticleObject() #custom manager
 
     def __str__(self):
         return str(self.title)
 
+
+    # Overriding the save method of Article model class for storing category slug with the help of slugify method. 
+    # Article name will be slugify into the slug 
+    # Example :- creating a crud application using django =>       creating-a-crud-application-using-django
     def save(self, *args, **kwargs):
         if not self.id:
             # Newly created object, so set slug
@@ -82,6 +100,7 @@ class Article(models.Model):
 
         super(Article, self).save(*args, **kwargs)
 
+    # meta class for storing the additional data of SubCategory model such as database table name ,django admin model name and ordering of article.
     class Meta:
         db_table = "blog_articles"
         verbose_name_plural = "Articles"

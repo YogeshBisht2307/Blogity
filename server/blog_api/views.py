@@ -4,7 +4,7 @@ from .serializers import ArticleSerializer
 
 
 class ArticleList(generics.ListCreateAPIView): #get and post request only
-    queryset = Article.objects.all()
+    queryset = Article.artcileobjects.all()
     serializer_class = ArticleSerializer
 
 class ArticleDetail(generics.RetrieveAPIView): #get and delete

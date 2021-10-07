@@ -1,5 +1,6 @@
-import React from 'react'
+import React from 'react';
 
+// article loading component for displaying the wating message untile fetchArticle function of app component do not return any data
 const ArticleLoading = () => {
     return (
         <div>
@@ -10,4 +11,4 @@ const ArticleLoading = () => {
     )
 }
 
-export default ArticleLoading
+export default ArticleLoading;
